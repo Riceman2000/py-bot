@@ -1,3 +1,0 @@
-Command is placed here:
-sudo gedit /etc/rc.local
-
