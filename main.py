@@ -19,7 +19,9 @@ from shutil import copyfile
 import os
 import subprocess
 
-TOKEN = '1605505719:AAHDO1rrwhr-xGyNhlorQzAM23kX5eEzva8'
+# File used to store tokens and paths off of git
+from secret import *
+
 
 functionality_rundown = """Current functionality: 
 •Send a url to have it downloaded and sent back
@@ -29,8 +31,6 @@ functionality_rundown = """Current functionality:
 
 /help to review this list at any time
 """
-
-torrent_path = '/home/pi/Desktop/RicePiPiPiBot/'
 
 
 def clean_file(file):
