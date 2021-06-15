@@ -104,8 +104,17 @@ class MessageHandler(telepot.aio.helper.ChatHandler):
             if msg['text'][0:2] == '//':
                 cmd = msg['text'][2:]
                 await self.sender.sendMessage('Executing command: ' + cmd)
+                # Check if command is in list that could cause a boot loop
+                warnList = ['reboot', 'shutdown']
+                if any(warnCmd in cmd for warnCmd in warnList):
+                    await self.sender.sendMessage("Command in warning list detected, executing with 15 second sleep\nNo output will be given")
+                    os.system('sleep 15 ; ' + cmd) # need to use a less favorable syntax for this 
+                    return
+                # Execution of regular commands without warning or sleep
                 result = subprocess.run(cmd.split(), stdout=subprocess.PIPE)
                 strOut = result.stdout.decode('UTF-8')
+                if strOut == None:
+                    strOut = 'No output.'
                 await self.sender.sendMessage(strOut)
                 print('Command executed: ' + cmd)
                 return
